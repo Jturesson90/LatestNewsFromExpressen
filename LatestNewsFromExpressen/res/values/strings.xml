@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Latest news from Expressen</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Breaking news from Expressen</string>
+    <string name="app_name_logo">Breaking news</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="network_failed">Network failed!</string>
+
+    <string-array name="rss_urls">
+        <item>http://expressen.se/rss/nyheter</item>
+        <item>http://gt.se/rss/nyheter</item>
+        <item>http://kvp.se/rss/nyheter</item>
+        <item>http://expressen.se/rss/sport</item>
+        <item>http://expressen.se/rss/noje</item>
+        <item>http://expressen.se/rss/debatt</item>
+        <item>http://expressen.se/rss/ledare</item>
+        <item>http://expressen.se/rss/kultur</item>
+        <item>http://expressen.se/rss/ekonomi</item>
+        <item>http://expressen.se/rss/halsa</item>
+        <item>http://expressen.se/rss/levabo</item>
+        <item>http://expressen.se/rss/motor</item>
+        <item>http://expressen.se/rss/res</item>
+        <item>http://expressen.se/rss/dokument</item>
+    </string-array>
+
+    
 
 </resources>
