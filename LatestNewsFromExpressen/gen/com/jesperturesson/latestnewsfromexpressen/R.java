@@ -1698,6 +1698,7 @@ containing a value of this type.
         public static final int submit_area=0x7f09003c;
         public static final int swipe_to_refresh=0x7f09003f;
         public static final int tabMode=0x7f09000c;
+        public static final int textView1=0x7f090045;
         public static final int title=0x7f090027;
         public static final int up=0x7f090001;
         public static final int useLogo=0x7f090013;
@@ -1755,7 +1756,8 @@ containing a value of this type.
         public static final int abc_simple_dropdown_hint=0x7f030016;
         public static final int activity_main=0x7f030017;
         public static final int news_list_row=0x7f030018;
-        public static final int support_simple_spinner_dropdown_item=0x7f030019;
+        public static final int news_list_row_clicked=0x7f030019;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001a;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

@@ -15,7 +15,7 @@ public class NewsAdapter extends ArrayAdapter<Article> {
 	public NewsAdapter(Context context) {
 		super(context, 0);
 	}
-
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -28,7 +28,7 @@ public class NewsAdapter extends ArrayAdapter<Article> {
 		TextView description = (TextView) convertView
 				.findViewById(R.id.news_row_description);
 		TextView time = (TextView) convertView.findViewById(R.id.news_row_time);
-		time.setText("12.12");
+		
 		Article article = getItem(position);
 		Log.d("NEWS", article.title);
 		if (article.clicked) {
@@ -37,6 +37,7 @@ public class NewsAdapter extends ArrayAdapter<Article> {
 		} else {
 			description.setVisibility(View.GONE);
 		}
+		time.setText(article.pubDate.time);
 		title.setText(article.title);
 		description.setText(article.description.text);
 		return convertView;

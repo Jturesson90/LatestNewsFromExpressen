@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import com.jesperturesson.latestnewsfromexpressen.models.Article;
 import com.jesperturesson.latestnewsfromexpressen.models.NewsSite;
+import com.jesperturesson.latestnewsfromexpressen.models.Sort;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -64,6 +66,7 @@ public class MainActivity extends ActionBarActivity {
 				} else {
 					setDescriptionVisible(textView, article);
 				}
+
 			}
 		});
 
@@ -71,7 +74,7 @@ public class MainActivity extends ActionBarActivity {
 
 	private void setDescriptionVisible(TextView textView, Article article) {
 		setAllDescriptionsToGone();
-	
+
 		textView.setVisibility(View.VISIBLE);
 		article.clicked = true;
 	}
@@ -115,6 +118,8 @@ public class MainActivity extends ActionBarActivity {
 							newsAdapter.clear();
 							pushToAdapter(news);
 							swipeRefreshLayout.setRefreshing(false);
+							Sort.onDate(newsAdapter);
+							showOnlyTenNews();
 						}
 					});
 				} else {
@@ -138,7 +143,21 @@ public class MainActivity extends ActionBarActivity {
 		for (Article article : news.articles) {
 			newsAdapter.add(article);
 		}
+
 		newsAdapter.notifyDataSetChanged();
 	}
 
+	private void showOnlyTenNews() {
+		Log.d("HEJ", "Test");
+		int len = newsAdapter.getCount();
+		for (int i = Article.NUMBER_OF_ITEMS_TO_SHOW; i < len; i++) {
+			Article article = newsAdapter
+					.getItem(Article.NUMBER_OF_ITEMS_TO_SHOW);
+			if (article != null) {
+				newsAdapter.remove(article);
+			}
+		}
+		newsAdapter.notifyDataSetChanged();
+
+	}
 }
