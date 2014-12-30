@@ -23,6 +23,7 @@ public class Article {
 	public String author;
 	public Description description;
 	public Date pubDate;
+	public boolean clicked = false;
 	
 	
 	public Article(String link, String title, String author, String description, String pubDate){

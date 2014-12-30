@@ -1379,19 +1379,19 @@ containing a value of this type.
         public static final int abc_config_showMenuShortcutsWhenKeyboardPresent=0x7f050003;
     }
     public static final class color {
-        public static final int abc_background_cache_hint_selector_material_dark=0x7f060031;
-        public static final int abc_background_cache_hint_selector_material_light=0x7f060032;
+        public static final int abc_background_cache_hint_selector_material_dark=0x7f060034;
+        public static final int abc_background_cache_hint_selector_material_light=0x7f060035;
         public static final int abc_input_method_navigation_guard=0x7f060003;
-        public static final int abc_primary_text_disable_only_material_dark=0x7f060033;
-        public static final int abc_primary_text_disable_only_material_light=0x7f060034;
-        public static final int abc_primary_text_material_dark=0x7f060035;
-        public static final int abc_primary_text_material_light=0x7f060036;
-        public static final int abc_search_url_text=0x7f060037;
+        public static final int abc_primary_text_disable_only_material_dark=0x7f060036;
+        public static final int abc_primary_text_disable_only_material_light=0x7f060037;
+        public static final int abc_primary_text_material_dark=0x7f060038;
+        public static final int abc_primary_text_material_light=0x7f060039;
+        public static final int abc_search_url_text=0x7f06003a;
         public static final int abc_search_url_text_normal=0x7f060000;
         public static final int abc_search_url_text_pressed=0x7f060002;
         public static final int abc_search_url_text_selected=0x7f060001;
-        public static final int abc_secondary_text_material_dark=0x7f060038;
-        public static final int abc_secondary_text_material_light=0x7f060039;
+        public static final int abc_secondary_text_material_dark=0x7f06003b;
+        public static final int abc_secondary_text_material_light=0x7f06003c;
         public static final int accent_material_dark=0x7f06000f;
         public static final int accent_material_light=0x7f06000e;
         public static final int background_floating_material_dark=0x7f060006;
@@ -1414,6 +1414,9 @@ containing a value of this type.
         public static final int dim_foreground_disabled_material_light=0x7f06001d;
         public static final int dim_foreground_material_dark=0x7f06001a;
         public static final int dim_foreground_material_light=0x7f06001b;
+        public static final int flat_black=0x7f060033;
+        public static final int flat_blue=0x7f060032;
+        public static final int flat_red=0x7f060031;
         /**  TODO: This is 40% alpha on the default accent color. 
          */
         public static final int highlighted_text_material_dark=0x7f060020;
@@ -1573,6 +1576,7 @@ containing a value of this type.
         public static final int dialog_fixed_width_minor=0x7f07000d;
         public static final int disabled_alpha_material_dark=0x7f070001;
         public static final int disabled_alpha_material_light=0x7f070000;
+        public static final int picture_width=0x7f07002c;
         public static final int row_height=0x7f07002b;
     }
     public static final class drawable {
@@ -1662,14 +1666,15 @@ containing a value of this type.
         public static final int icon=0x7f090026;
         public static final int ifRoom=0x7f090016;
         public static final int image=0x7f090023;
-        public static final int imageView=0x7f090041;
+        public static final int imageView=0x7f090042;
         public static final int listMode=0x7f09000a;
         public static final int listView=0x7f090040;
         public static final int list_item=0x7f090025;
         public static final int middle=0x7f09001d;
         public static final int never=0x7f090017;
-        public static final int news_row_description=0x7f090043;
-        public static final int news_row_title=0x7f090042;
+        public static final int news_row_description=0x7f090044;
+        public static final int news_row_time=0x7f090043;
+        public static final int news_row_title=0x7f090041;
         public static final int none=0x7f09000f;
         public static final int normal=0x7f09000b;
         public static final int progress_circular=0x7f090007;
