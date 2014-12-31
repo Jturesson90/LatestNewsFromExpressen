@@ -1,16 +1,12 @@
 package com.jesperturesson.latestnewsfromexpressen.models;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import android.graphics.Bitmap;
-
-import android.util.Log;
-
-import java.text.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 public class Article {
-	public final static int	NUMBER_OF_ITEMS_TO_SHOW = 10;
+	public final static int NUMBER_OF_ITEMS_TO_SHOW = 10;
 	public final static String ARTICLE = "item";
 	public final static String TITLE = "title";
 	public final static String AUTHOR = "author";
@@ -35,7 +31,6 @@ public class Article {
 
 	}
 
-
 	@Override
 	public String toString() {
 
@@ -47,7 +42,7 @@ public class Article {
 		public Date pubDate;
 		public String dayOfWeek;
 		public String year;
-		public String date;
+		public String month;
 		public String dayOfMonth;
 		public String time;
 
@@ -55,15 +50,15 @@ public class Article {
 			this.pubDate = stringToDate(pubDate);
 			this.dayOfWeek = setDayOfWeek(pubDate);
 			this.year = setYear(pubDate);
-			this.date = setDate(pubDate);
+			this.month = setMonth(pubDate);
 			this.dayOfMonth = setDayOfMonth(pubDate);
 			this.time = setTime(pubDate);
 		}
 
 		private Date stringToDate(String pubDate) {
-			Date date = new Date(pubDate);
+			Date pubDate1 = new Date(pubDate);
 
-			return date;
+			return pubDate1;
 
 		}
 
@@ -77,13 +72,15 @@ public class Article {
 		}
 
 		private String setDayOfMonth(String pubDate) {
-			// TODO Auto-generated method stub
-			return null;
+			String[] items = pubDate.split(" ");
+			String dayOfMonth = items[1];
+			return dayOfMonth;
 		}
 
-		private String setDate(String pubDate) {
-			// TODO Auto-generated method stub
-			return null;
+		private String setMonth(String pubDate) {
+			String[] items = pubDate.split(" ");
+			String month = items[2];
+			return month;
 		}
 
 		private String setYear(String pubDate) {
@@ -99,11 +96,34 @@ public class Article {
 
 	public class Description {
 
-		public Bitmap image;
+		public String imageLink;
 		public String text;
 
 		public Description(String desc) {
-			text = desc;
+
+			this.text = parseBody(desc);
+			this.imageLink = parsePicture(desc);
+
+		}
+
+		private String parsePicture(String desc) {
+			String src = null;
+			if (desc.contains("img")) {
+				Document document = Jsoup.parse(desc);
+				Element img = document.select("img").first();
+				src = img.attr("src");
+			}
+			return src;
+		}
+
+		private String parseBody(String desc) {
+			String text = null;
+			if (desc.contains("p")) {
+				Document document = Jsoup.parse(desc);
+				text = document.body().text();
+			}
+			return text;
+
 		}
 	}
 }

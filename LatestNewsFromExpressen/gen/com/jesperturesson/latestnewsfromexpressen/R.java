@@ -1576,7 +1576,9 @@ containing a value of this type.
         public static final int dialog_fixed_width_minor=0x7f07000d;
         public static final int disabled_alpha_material_dark=0x7f070001;
         public static final int disabled_alpha_material_light=0x7f070000;
-        public static final int picture_width=0x7f07002c;
+        public static final int half_padding=0x7f07002e;
+        public static final int image_width=0x7f07002c;
+        public static final int padding=0x7f07002d;
         public static final int row_height=0x7f07002b;
     }
     public static final class drawable {
@@ -1666,13 +1668,12 @@ containing a value of this type.
         public static final int icon=0x7f090026;
         public static final int ifRoom=0x7f090016;
         public static final int image=0x7f090023;
-        public static final int imageView=0x7f090042;
         public static final int listMode=0x7f09000a;
         public static final int listView=0x7f090040;
         public static final int list_item=0x7f090025;
         public static final int middle=0x7f09001d;
         public static final int never=0x7f090017;
-        public static final int news_row_description=0x7f090044;
+        public static final int news_row_imageView=0x7f090042;
         public static final int news_row_time=0x7f090043;
         public static final int news_row_title=0x7f090041;
         public static final int none=0x7f09000f;
@@ -1698,7 +1699,7 @@ containing a value of this type.
         public static final int submit_area=0x7f09003c;
         public static final int swipe_to_refresh=0x7f09003f;
         public static final int tabMode=0x7f09000c;
-        public static final int textView1=0x7f090045;
+        public static final int textView1=0x7f090044;
         public static final int title=0x7f090027;
         public static final int up=0x7f090001;
         public static final int useLogo=0x7f090013;

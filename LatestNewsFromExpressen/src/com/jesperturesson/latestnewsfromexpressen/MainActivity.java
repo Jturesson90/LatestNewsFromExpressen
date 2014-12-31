@@ -3,6 +3,7 @@ package com.jesperturesson.latestnewsfromexpressen;
 import java.util.ArrayList;
 
 import com.jesperturesson.latestnewsfromexpressen.models.Article;
+import com.jesperturesson.latestnewsfromexpressen.models.BitmapFunctions;
 import com.jesperturesson.latestnewsfromexpressen.models.NewsSite;
 import com.jesperturesson.latestnewsfromexpressen.models.Sort;
 
@@ -12,12 +13,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
-
+	public static ActionBarActivity mainActivity;
+	ArrayList<Article> articles;
 	ListView listView;
 	NewsAdapter newsAdapter;
 	SwipeRefreshLayout swipeRefreshLayout;
@@ -29,12 +32,15 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		init();
+		mainActivity = this;
+
 	}
 
 	private void init() {
 		initListView();
 		initSwipeRefreshLayout();
 		refreshNews();
+		swipeRefreshLayout.setRefreshing(true);
 	}
 
 	private void initSwipeRefreshLayout() {
@@ -58,36 +64,18 @@ public class MainActivity extends ActionBarActivity {
 
 				Article article = (Article) parent.getItemAtPosition(position);
 
-				TextView textView = (TextView) view
-						.findViewById(R.id.news_row_description);
-				if (textView.getVisibility() == View.VISIBLE) {
-					Toast.makeText(getApplicationContext(), "2nd click =)",
-							Toast.LENGTH_SHORT).show();
-				} else {
-					setDescriptionVisible(textView, article);
-				}
+				Toast.makeText(getApplicationContext(),
+						"" + article.description.text, Toast.LENGTH_SHORT)
+						.show();
 
 			}
 		});
 
 	}
 
-	private void setDescriptionVisible(TextView textView, Article article) {
-		setAllDescriptionsToGone();
-
-		textView.setVisibility(View.VISIBLE);
-		article.clicked = true;
-	}
-
 	private void setAllDescriptionsToGone() {
 
-		int len = listView.getChildCount();
-		for (int i = 0; i < len; i++) {
-			TextView textView = (TextView) listView.getChildAt(i).findViewById(
-					R.id.news_row_description);
-			textView.setVisibility(View.GONE);
-		}
-		len = listView.getCount();
+		int len = listView.getCount();
 		for (int i = 0; i < len; i++) {
 			Article article = (Article) listView.getItemAtPosition(i);
 			article.clicked = false;
@@ -104,8 +92,7 @@ public class MainActivity extends ActionBarActivity {
 				final XmlParser parser = new XmlParser();
 
 				String[] urls = getResources().getStringArray(R.array.rss_urls);
-				final ArrayList<Article> articles = connection.get(urls[2],
-						parser);
+				articles = connection.get(urls[2], parser);
 				if (articles != null) {
 					connectionIsFine = true;
 				}
@@ -116,11 +103,13 @@ public class MainActivity extends ActionBarActivity {
 						public void run() {
 							NewsSite news = new NewsSite(articles);
 							newsAdapter.clear();
+							Sort.onDate2(news.articles);
+							limitNumberOfArticles(news.articles,
+									Article.NUMBER_OF_ITEMS_TO_SHOW);
 							pushToAdapter(news);
 							swipeRefreshLayout.setRefreshing(false);
-							Sort.onDate(newsAdapter);
-							showOnlyTenNews();
 						}
+
 					});
 				} else {
 					runOnUiThread(new Runnable() {
@@ -137,6 +126,17 @@ public class MainActivity extends ActionBarActivity {
 		}).start();
 	}
 
+	private void addPictures() {
+		int len = newsAdapter.getCount();
+		for (int i = 0; i < len; i++) {
+			Article article = newsAdapter.getItem(i);
+			String imageUrl = article.description.imageLink;
+			if (imageUrl != null) {
+
+			}
+		}
+	}
+
 	private void pushToAdapter(NewsSite news) {
 
 		listView.setAdapter(newsAdapter);
@@ -147,6 +147,13 @@ public class MainActivity extends ActionBarActivity {
 		newsAdapter.notifyDataSetChanged();
 	}
 
+	private void limitNumberOfArticles(ArrayList<Article> articles,
+			int numberOfItemsToShow) {
+		while (articles.size() > numberOfItemsToShow) {
+			articles.remove(articles.size() - 1);
+		}
+	}
+
 	private void showOnlyTenNews() {
 		Log.d("HEJ", "Test");
 		int len = newsAdapter.getCount();
@@ -155,9 +162,9 @@ public class MainActivity extends ActionBarActivity {
 					.getItem(Article.NUMBER_OF_ITEMS_TO_SHOW);
 			if (article != null) {
 				newsAdapter.remove(article);
+
 			}
 		}
 		newsAdapter.notifyDataSetChanged();
-
 	}
 }

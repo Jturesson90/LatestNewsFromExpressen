@@ -284,7 +284,9 @@ int dimen dialog_fixed_width_major 0x7f07000c
 int dimen dialog_fixed_width_minor 0x7f07000d
 int dimen disabled_alpha_material_dark 0x7f070001
 int dimen disabled_alpha_material_light 0x7f070000
-int dimen picture_width 0x7f07002c
+int dimen half_padding 0x7f07002e
+int dimen image_width 0x7f07002c
+int dimen padding 0x7f07002d
 int dimen row_height 0x7f07002b
 int drawable abc_ab_share_pack_holo_dark 0x7f020000
 int drawable abc_ab_share_pack_holo_light 0x7f020001
@@ -370,13 +372,12 @@ int id homeAsUp 0x7f09000e
 int id icon 0x7f090026
 int id ifRoom 0x7f090016
 int id image 0x7f090023
-int id imageView 0x7f090042
 int id listMode 0x7f09000a
 int id listView 0x7f090040
 int id list_item 0x7f090025
 int id middle 0x7f09001d
 int id never 0x7f090017
-int id news_row_description 0x7f090044
+int id news_row_imageView 0x7f090042
 int id news_row_time 0x7f090043
 int id news_row_title 0x7f090041
 int id none 0x7f09000f
@@ -402,7 +403,7 @@ int id split_action_bar 0x7f090004
 int id submit_area 0x7f09003c
 int id swipe_to_refresh 0x7f09003f
 int id tabMode 0x7f09000c
-int id textView1 0x7f090045
+int id textView1 0x7f090044
 int id title 0x7f090027
 int id up 0x7f090001
 int id useLogo 0x7f090013
