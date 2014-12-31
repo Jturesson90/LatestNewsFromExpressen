@@ -26,7 +26,6 @@ public class MainActivity extends ActionBarActivity {
 	NewsAdapter newsAdapter;
 	SwipeRefreshLayout swipeRefreshLayout;
 	NewsSite news;
-	protected boolean connectionIsFine;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +66,10 @@ public class MainActivity extends ActionBarActivity {
 
 				Article article = (Article) parent.getItemAtPosition(position);
 
-				Toast.makeText(getApplicationContext(),
-						"" + article.description.text, Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(
+						getApplicationContext(),
+						"" + article.description.text + "\n\n" + article.author,
+						Toast.LENGTH_LONG).show();
 
 			}
 		});
@@ -81,36 +81,12 @@ public class MainActivity extends ActionBarActivity {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				connectionIsFine = false;
+				
 				ServerConnection connection = new ServerConnection();
 				final XmlParser parser = new XmlParser();
-
-				String[] urls = getResources().getStringArray(R.array.rss_urls);
-				// String testUrl = "http://m.expressen.se/rss/sport";
-				// articles = connection.get(testUrl, parser);
-				int len = urls.length;
-				for (int i = 0; i < len; i++) {
-					ArrayList<Article> newArticles = connection.get(urls[i],
-							parser);
-					if (newArticles != null) {
-						for (int j = 0; j < newArticles.size(); j++) {
-							Article newArticle = newArticles.get(j);
-							if (!alreadyGotItem(articles, newArticle)) {
-								articles.add(newArticle);
-							}
-						}
-
-					}
-				}
-				if (articles != null) {
-					if (articles.size() > 0) {
-						connectionIsFine = true;
-						Log.d("SIZE", "Size: " + articles.size());
-					}
-
-				}
-				if (connectionIsFine) {
-
+				setArticles(connection, articles, parser);
+				
+				if (isConnectionFine()) {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -129,14 +105,48 @@ public class MainActivity extends ActionBarActivity {
 						@Override
 						public void run() {
 							swipeRefreshLayout.setRefreshing(false);
-							Toast.makeText(getApplicationContext(),
-									R.string.network_failed, Toast.LENGTH_LONG)
-									.show();
+							showErrorToast();
+
 						}
 					});
 				}
 			}
 		}).start();
+	}
+
+	private boolean isConnectionFine() {
+		boolean connectionIsFine = false;
+		if (articles != null) {
+			if (articles.size() > 0) {
+				connectionIsFine = true;
+				Log.d("SIZE", "Size: " + articles.size());
+			}
+		}
+		return connectionIsFine;
+	}
+
+	private void setArticles(ServerConnection connection,
+			ArrayList<Article> articles, XmlParser parser) {
+		String[] urls = getResources().getStringArray(R.array.rss_urls);
+		int len = urls.length;
+		for (int i = 0; i < len; i++) {
+			ArrayList<Article> newArticles = connection.get(urls[i], parser);
+			if (newArticles != null) {
+				for (int j = 0; j < newArticles.size(); j++) {
+					Article newArticle = newArticles.get(j);
+					if (!alreadyGotItem(articles, newArticle)) {
+						articles.add(newArticle);
+					}
+				}
+
+			}
+		}
+
+	}
+
+	private void showErrorToast() {
+		Toast.makeText(getApplicationContext(), R.string.network_failed,
+				Toast.LENGTH_LONG).show();
 	}
 
 	private boolean alreadyGotItem(ArrayList<Article> articles,
@@ -165,17 +175,4 @@ public class MainActivity extends ActionBarActivity {
 		}
 	}
 
-	private void showOnlyTenNews() {
-		Log.d("HEJ", "Test");
-		int len = newsAdapter.getCount();
-		for (int i = Article.NUMBER_OF_ITEMS_TO_SHOW; i < len; i++) {
-			Article article = newsAdapter
-					.getItem(Article.NUMBER_OF_ITEMS_TO_SHOW);
-			if (article != null) {
-				newsAdapter.remove(article);
-
-			}
-		}
-		newsAdapter.notifyDataSetChanged();
-	}
 }
