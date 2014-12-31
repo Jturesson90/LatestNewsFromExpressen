@@ -7,6 +7,7 @@ import com.jesperturesson.latestnewsfromexpressen.models.BitmapFunctions;
 import com.jesperturesson.latestnewsfromexpressen.models.NewsSite;
 import com.jesperturesson.latestnewsfromexpressen.models.Sort;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
-	public static ActionBarActivity mainActivity;
+	public static Activity mainActivity;
 	ArrayList<Article> articles;
 	ListView listView;
 	NewsAdapter newsAdapter;
@@ -30,6 +31,7 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_main);
 		init();
 		mainActivity = this;
@@ -40,11 +42,11 @@ public class MainActivity extends ActionBarActivity {
 		initListView();
 		initSwipeRefreshLayout();
 		refreshNews();
-		swipeRefreshLayout.setRefreshing(true);
 	}
 
 	private void initSwipeRefreshLayout() {
 		swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_to_refresh);
+
 		swipeRefreshLayout
 				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 					@Override
@@ -52,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
 						refreshNews();
 					}
 				});
+
 	}
 
 	private void initListView() {
@@ -65,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
 				Article article = (Article) parent.getItemAtPosition(position);
 
 				Toast.makeText(getApplicationContext(),
-						"" + article.description.text, Toast.LENGTH_SHORT)
+						"" + article.description.text, Toast.LENGTH_LONG)
 						.show();
 
 			}
@@ -73,17 +76,8 @@ public class MainActivity extends ActionBarActivity {
 
 	}
 
-	private void setAllDescriptionsToGone() {
-
-		int len = listView.getCount();
-		for (int i = 0; i < len; i++) {
-			Article article = (Article) listView.getItemAtPosition(i);
-			article.clicked = false;
-		}
-
-	}
-
 	private void refreshNews() {
+		articles = new ArrayList<Article>();
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -92,9 +86,28 @@ public class MainActivity extends ActionBarActivity {
 				final XmlParser parser = new XmlParser();
 
 				String[] urls = getResources().getStringArray(R.array.rss_urls);
-				articles = connection.get(urls[2], parser);
+				// String testUrl = "http://m.expressen.se/rss/sport";
+				// articles = connection.get(testUrl, parser);
+				int len = urls.length;
+				for (int i = 0; i < len; i++) {
+					ArrayList<Article> newArticles = connection.get(urls[i],
+							parser);
+					if (newArticles != null) {
+						for (int j = 0; j < newArticles.size(); j++) {
+							Article newArticle = newArticles.get(j);
+							if (!alreadyGotItem(articles, newArticle)) {
+								articles.add(newArticle);
+							}
+						}
+
+					}
+				}
 				if (articles != null) {
-					connectionIsFine = true;
+					if (articles.size() > 0) {
+						connectionIsFine = true;
+						Log.d("SIZE", "Size: " + articles.size());
+					}
+
 				}
 				if (connectionIsFine) {
 
@@ -126,15 +139,14 @@ public class MainActivity extends ActionBarActivity {
 		}).start();
 	}
 
-	private void addPictures() {
-		int len = newsAdapter.getCount();
-		for (int i = 0; i < len; i++) {
-			Article article = newsAdapter.getItem(i);
-			String imageUrl = article.description.imageLink;
-			if (imageUrl != null) {
-
+	private boolean alreadyGotItem(ArrayList<Article> articles,
+			Article newArticle) {
+		for (Article article : articles) {
+			if (article.title.equals(newArticle.title)) {
+				return true;
 			}
 		}
+		return false;
 	}
 
 	private void pushToAdapter(NewsSite news) {
@@ -143,7 +155,6 @@ public class MainActivity extends ActionBarActivity {
 		for (Article article : news.articles) {
 			newsAdapter.add(article);
 		}
-
 		newsAdapter.notifyDataSetChanged();
 	}
 

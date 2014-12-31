@@ -22,9 +22,7 @@ public class BitmapFunctions {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				try {
-					Log.d("PIC", "B");
 					URL url = new URL(src);
 					HttpURLConnection connection = (HttpURLConnection) url
 							.openConnection();
@@ -45,7 +43,7 @@ public class BitmapFunctions {
 				} catch (IOException e) {
 					// Log exception
 					Log.e("Pic",
-							"Error when trying to get picture: " + e.toString());
+							"Error when trying to get image: " + e.toString());
 				}
 
 			}

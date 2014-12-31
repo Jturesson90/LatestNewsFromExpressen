@@ -15,12 +15,14 @@ import android.util.Log;
 import android.util.Xml;
 
 public class XmlParser extends Parser {
-
+	private static final String TAG = "XMLPARSER";
 	private static final String ns = null;
 
 	@Override
 	public ArrayList<Article> parse(InputStream in) throws XmlPullParserException,
 			IOException {
+		Log.d(TAG,"Parse Start");
+        
 		try {
 			XmlPullParser parser = Xml.newPullParser();
 			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -36,15 +38,17 @@ public class XmlParser extends Parser {
 
 	private ArrayList<Article> readChannel(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
+		Log.d(TAG,"Read channel");
 		parser.require(XmlPullParser.START_TAG, ns, "rss");
 		ArrayList<Article> items = null;
 		while (parser.next() != XmlPullParser.END_TAG) {
+			
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
 			String name = parser.getName();
-			Log.d("TEST", "Channel: " + name);
 			if (name.equals("channel")) {
+				Log.d(TAG,"Found Channel");
 				items = readFeed(parser);
 			} else {
 				skip(parser);
@@ -56,7 +60,7 @@ public class XmlParser extends Parser {
 
 	private ArrayList<Article> readFeed(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
-
+		Log.d(TAG,"Read feed");
 		ArrayList<Article> items = new ArrayList<Article>();
 		parser.require(XmlPullParser.START_TAG, ns, "channel");
 		while (parser.next() != XmlPullParser.END_TAG) {
@@ -64,8 +68,9 @@ public class XmlParser extends Parser {
 				continue;
 			}
 			String name = parser.getName();
-			Log.d("TEST", "Feed: " + name);
+			
 			if (name.equals(Article.ARTICLE)) {
+				Log.d(TAG,"Found Article");
 				items.add(readArticle(parser));
 			} else {
 				skip(parser);
