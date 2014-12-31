@@ -68,7 +68,8 @@ public class MainActivity extends ActionBarActivity {
 
 				Toast.makeText(
 						getApplicationContext(),
-						"" + article.description.text + "\n\n" + article.author,
+						"" + article.description.text + "\n\n"
+								+ article.channelTitle + "\n" + article.author,
 						Toast.LENGTH_LONG).show();
 
 			}
@@ -81,11 +82,11 @@ public class MainActivity extends ActionBarActivity {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				
+
 				ServerConnection connection = new ServerConnection();
 				final XmlParser parser = new XmlParser();
 				setArticles(connection, articles, parser);
-				
+
 				if (isConnectionFine()) {
 					runOnUiThread(new Runnable() {
 						@Override

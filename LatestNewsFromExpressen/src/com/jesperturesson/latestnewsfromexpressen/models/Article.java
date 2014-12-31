@@ -19,16 +19,19 @@ public class Article {
 	public ArticleTime pubDate;
 	public String author;
 	public Description description;
-	public boolean clicked = false;
+	public String channelTitle;
+	public String channelLink;
 
 	public Article(String link, String title, String author,
-			String description, String pubDate) {
+			String description, String pubDate, String channelTitle,
+			String channelLink) {
 		this.title = title;
 		this.link = link;
 		this.author = author;
 		this.description = new Description(description);
 		this.pubDate = new ArticleTime(pubDate);
-
+		this.channelTitle = channelTitle;
+		this.channelLink = channelLink;
 	}
 
 	@Override
