@@ -10,12 +10,24 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.jesperturesson.latestnewsfromexpressen.models.Article;
-import com.jesperturesson.latestnewsfromexpressen.models.Channel;
 
 import android.util.Log;
 import android.util.Xml;
 
 public class XmlParser extends Parser {
+
+	/**
+	 * Constants
+	 */
+	public final static String ITEM = "item";
+	public final static String TITLE = "title";
+	public final static String AUTHOR = "author";
+	public final static String DESCRIPTION = "description";
+	public final static String PUBDATE = "pubDate";
+	public final static String LINK = "link";
+	public final static String COPYRIGHT = "copyright";
+	public final static String MANAGING_EDITOR = "managingEditor";
+
 	private static final String TAG = "XMLPARSER";
 	private static final String ns = null;
 	private String channelTitle;
@@ -74,11 +86,16 @@ public class XmlParser extends Parser {
 				continue;
 			}
 			String name = parser.getName();
-			if (name.equals(Channel.TITLE)) {
+			if (name.equals(XmlParser.TITLE)) {
 				channelTitle = readTitle(parser);
-			} else if (name.equals(Article.ARTICLE)) {
-				Log.d(TAG, "Found Article");
+			} else if (name.equals(XmlParser.ITEM)) {
 				items.add(readArticle(parser));
+			} else if (name.equals(XmlParser.COPYRIGHT)) {
+				channelCopyright = readCopyright(parser);
+			} else if (name.equals(XmlParser.MANAGING_EDITOR)) {
+				channelManagingEditor = readManagingEditor(parser);
+			} else if (name.equals(XmlParser.DESCRIPTION)) {
+				channelDescription = readDescription(parser);
 			} else {
 				skip(parser);
 			}
@@ -89,7 +106,7 @@ public class XmlParser extends Parser {
 
 	private Article readArticle(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
-		parser.require(XmlPullParser.START_TAG, ns, Article.ARTICLE);
+		parser.require(XmlPullParser.START_TAG, ns, XmlParser.ITEM);
 		String title = null;
 		String author = null;
 		String description = null;
@@ -102,64 +119,86 @@ public class XmlParser extends Parser {
 			}
 			String name = parser.getName();
 			Log.d("TEST", "Article: " + name);
-			if (name.equals(Article.TITLE)) {
+			if (name.equals(XmlParser.TITLE)) {
 				title = readTitle(parser);
-			} else if (name.equals(Article.AUTHOR)) {
+			} else if (name.equals(XmlParser.AUTHOR)) {
 				author = readAuthor(parser);
-			} else if (name.equals(Article.DESCRIPTION)) {
+			} else if (name.equals(XmlParser.DESCRIPTION)) {
 				description = readDescription(parser);
-			} else if (name.equals(Article.LINK)) {
+			} else if (name.equals(XmlParser.LINK)) {
 				link = readLink(parser);
-			} else if (name.equals(Article.PUBDATE)) {
+			} else if (name.equals(XmlParser.PUBDATE)) {
 				pubDate = readPubDate(parser);
 			} else {
 				skip(parser);
 			}
 
 		}
-		Article article = new Article(link, title, author, description, pubDate,channelTitle,channelLink);
+		Article article = new Article(link, title, author, description,
+				pubDate, channelTitle, channelLink, channelDescription,
+				channelCopyright, channelManagingEditor);
 		Log.d("SUCCESS", article.toString());
 		return article;
 	}
 
 	private String readPubDate(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
-		parser.require(XmlPullParser.START_TAG, ns, Article.PUBDATE);
+		parser.require(XmlPullParser.START_TAG, ns, XmlParser.PUBDATE);
 		String pubDate = readText(parser);
-		parser.require(XmlPullParser.END_TAG, ns, Article.PUBDATE);
+		parser.require(XmlPullParser.END_TAG, ns, XmlParser.PUBDATE);
 		return pubDate;
 	}
 
 	private String readLink(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
-		parser.require(XmlPullParser.START_TAG, ns, Article.LINK);
+		parser.require(XmlPullParser.START_TAG, ns, XmlParser.LINK);
 		String link = readText(parser);
-		parser.require(XmlPullParser.END_TAG, ns, Article.LINK);
+		parser.require(XmlPullParser.END_TAG, ns, XmlParser.LINK);
 		return link;
 	}
 
 	private String readDescription(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
-		parser.require(XmlPullParser.START_TAG, ns, Article.DESCRIPTION);
+		parser.require(XmlPullParser.START_TAG, ns, XmlParser.DESCRIPTION);
 		String description = readText(parser);
-		parser.require(XmlPullParser.END_TAG, ns, Article.DESCRIPTION);
+		parser.require(XmlPullParser.END_TAG, ns, XmlParser.DESCRIPTION);
 		return description;
 	}
 
 	private String readAuthor(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
-		parser.require(XmlPullParser.START_TAG, ns, Article.AUTHOR);
+		parser.require(XmlPullParser.START_TAG, ns, XmlParser.AUTHOR);
 		String author = readText(parser);
-		parser.require(XmlPullParser.END_TAG, ns, Article.AUTHOR);
+		parser.require(XmlPullParser.END_TAG, ns, XmlParser.AUTHOR);
 		return author;
 	}
 
 	private String readTitle(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
 
-		parser.require(XmlPullParser.START_TAG, ns, Article.TITLE);
+		parser.require(XmlPullParser.START_TAG, ns, XmlParser.TITLE);
 		String title = readText(parser);
-		parser.require(XmlPullParser.END_TAG, ns, Article.TITLE);
+		parser.require(XmlPullParser.END_TAG, ns, XmlParser.TITLE);
+		return title;
+
+	}
+
+	private String readCopyright(XmlPullParser parser)
+			throws XmlPullParserException, IOException {
+
+		parser.require(XmlPullParser.START_TAG, ns, XmlParser.COPYRIGHT);
+		String title = readText(parser);
+		parser.require(XmlPullParser.END_TAG, ns, XmlParser.COPYRIGHT);
+		return title;
+
+	}
+
+	private String readManagingEditor(XmlPullParser parser)
+			throws XmlPullParserException, IOException {
+
+		parser.require(XmlPullParser.START_TAG, ns, XmlParser.MANAGING_EDITOR);
+		String title = readText(parser);
+		parser.require(XmlPullParser.END_TAG, ns, XmlParser.MANAGING_EDITOR);
 		return title;
 
 	}

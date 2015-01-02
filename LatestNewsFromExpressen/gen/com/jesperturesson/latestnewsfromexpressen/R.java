@@ -1730,6 +1730,7 @@ containing a value of this type.
          showAsAction="ifRoom" items can fit. "always" items can override this. 
          */
         public static final int abc_max_action_buttons=0x7f080000;
+        public static final int number_of_articles=0x7f080001;
     }
     public static final class layout {
         public static final int abc_action_bar_title_item=0x7f030000;

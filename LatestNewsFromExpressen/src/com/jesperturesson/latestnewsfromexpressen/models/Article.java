@@ -5,14 +5,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import android.gesture.GestureOverlayView;
+import android.util.Log;
+
 public class Article {
 	public final static int NUMBER_OF_ITEMS_TO_SHOW = 10;
-	public final static String ARTICLE = "item";
-	public final static String TITLE = "title";
-	public final static String AUTHOR = "author";
-	public final static String DESCRIPTION = "description";
-	public final static String PUBDATE = "pubDate";
-	public final static String LINK = "link";
 
 	public String title;
 	public String link;
@@ -21,10 +18,14 @@ public class Article {
 	public Description description;
 	public String channelTitle;
 	public String channelLink;
+	public String channelCopyright;
+	public String channelDescription;
+	public String channelManagingEditor;
 
 	public Article(String link, String title, String author,
 			String description, String pubDate, String channelTitle,
-			String channelLink) {
+			String channelLink, String channelDescription,
+			String channelCopyright, String channelManagingEditor) {
 		this.title = title;
 		this.link = link;
 		this.author = author;
@@ -32,6 +33,9 @@ public class Article {
 		this.pubDate = new ArticleTime(pubDate);
 		this.channelTitle = channelTitle;
 		this.channelLink = channelLink;
+		this.channelCopyright = channelCopyright;
+		this.channelDescription = channelDescription;
+		this.channelManagingEditor = channelManagingEditor;
 	}
 
 	@Override
@@ -87,13 +91,16 @@ public class Article {
 		}
 
 		private String setYear(String pubDate) {
-			// TODO Auto-generated method stub
-			return null;
+			String[] items = pubDate.split(" ");
+			String year = items[3];
+			return year;
 		}
 
 		private String setDayOfWeek(String pubDate) {
-			// TODO Auto-generated method stub
-			return null;
+			String[] items = pubDate.split(" ");
+			String day = items[0];
+			day = day.replace(",", "");
+			return day;
 		}
 	}
 

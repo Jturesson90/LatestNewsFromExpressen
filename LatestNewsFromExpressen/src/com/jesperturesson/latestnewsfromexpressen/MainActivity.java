@@ -69,8 +69,10 @@ public class MainActivity extends ActionBarActivity {
 				Toast.makeText(
 						getApplicationContext(),
 						"" + article.description.text + "\n\n"
-								+ article.channelTitle + "\n" + article.author,
-						Toast.LENGTH_LONG).show();
+								+ article.channelTitle + "\n" + article.author
+								+ "\n" + article.pubDate.dayOfWeek + "\n"
+								+ article.pubDate.year, Toast.LENGTH_LONG)
+						.show();
 
 			}
 		});
@@ -93,9 +95,8 @@ public class MainActivity extends ActionBarActivity {
 						public void run() {
 							NewsSite news = new NewsSite(articles);
 							newsAdapter.clear();
-							Sort.onDate2(news.articles);
-							limitNumberOfArticles(news.articles,
-									Article.NUMBER_OF_ITEMS_TO_SHOW);
+							handleArticles(news.articles);
+
 							pushToAdapter(news);
 							swipeRefreshLayout.setRefreshing(false);
 						}
@@ -115,6 +116,23 @@ public class MainActivity extends ActionBarActivity {
 		}).start();
 	}
 
+	private void handleArticles(ArrayList<Article> articles) {
+		Sort.onDate(articles);
+		limitArticles(articles);
+	}
+
+	private void limitArticles(ArrayList<Article> articles) {
+
+		int numberOfArticlesToShow = getResources().getInteger(
+				R.integer.number_of_articles);
+
+		while (articles.size() > numberOfArticlesToShow) {
+			int lastIndex = articles.size() - 1;
+			articles.remove(lastIndex);
+		}
+
+	}
+
 	private boolean isConnectionFine() {
 		boolean connectionIsFine = false;
 		if (articles != null) {
@@ -128,14 +146,32 @@ public class MainActivity extends ActionBarActivity {
 
 	private void setArticles(ServerConnection connection,
 			ArrayList<Article> articles, XmlParser parser) {
+
+		// Get all feed links from resources.
 		String[] urls = getResources().getStringArray(R.array.rss_urls);
+
+		// Defines number of feed links
 		int len = urls.length;
+
+		// Loop through all feed links
 		for (int i = 0; i < len; i++) {
+
+			// Fetch one feed
 			ArrayList<Article> newArticles = connection.get(urls[i], parser);
+
+			// If it returns something
 			if (newArticles != null) {
+
+				// Loop through all the articles from feed
 				for (int j = 0; j < newArticles.size(); j++) {
+
+					// Get a single article
 					Article newArticle = newArticles.get(j);
+
+					// If article not already exists
 					if (!alreadyGotItem(articles, newArticle)) {
+
+						// Add the new article to the article array
 						articles.add(newArticle);
 					}
 				}
@@ -167,13 +203,6 @@ public class MainActivity extends ActionBarActivity {
 			newsAdapter.add(article);
 		}
 		newsAdapter.notifyDataSetChanged();
-	}
-
-	private void limitNumberOfArticles(ArrayList<Article> articles,
-			int numberOfItemsToShow) {
-		while (articles.size() > numberOfItemsToShow) {
-			articles.remove(articles.size() - 1);
-		}
 	}
 
 }
