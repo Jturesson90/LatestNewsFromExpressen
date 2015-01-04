@@ -121,7 +121,9 @@ public class Article {
 			if (desc.contains("img")) {
 				Document document = Jsoup.parse(desc);
 				Element img = document.select("img").first();
-				src = img.attr("src");
+				if (desc.contains("src")) {
+					src = img.attr("src");
+				}
 			}
 			return src;
 		}
