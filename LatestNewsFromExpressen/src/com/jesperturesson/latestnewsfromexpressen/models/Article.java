@@ -57,6 +57,7 @@ public class Article {
 			this.time = setTime(pubDate);
 		}
 
+		@SuppressWarnings("deprecation")
 		private Date stringToDate(String pubDate) {
 			Date pubDate1 = new Date(pubDate);
 			return pubDate1;

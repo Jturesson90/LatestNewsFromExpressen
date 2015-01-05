@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.jesperturesson.latestnewsfromexpressen.R;
 import com.jesperturesson.latestnewsfromexpressen.adapters.NewsAdapter;
+import com.jesperturesson.latestnewsfromexpressen.fragments.NewslistFragment;
 import com.jesperturesson.latestnewsfromexpressen.helpers.Sort;
 import com.jesperturesson.latestnewsfromexpressen.models.Article;
 import com.jesperturesson.latestnewsfromexpressen.models.NewsSite;
@@ -17,8 +18,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,36 +27,39 @@ public class MainActivity extends ActionBarActivity {
 
 	ProgressDialog progressDialog;
 	ArrayList<Article> articles;
+	NewslistFragment newslistFragment;
 	ListView listView;
 	NewsAdapter newsAdapter;
 	SwipeRefreshLayout swipeRefreshLayout;
 	NewsSite news;
+	Bundle savedInstanceState;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		init(savedInstanceState);
+		this.savedInstanceState = savedInstanceState;
+		init();
 		mainActivity = this;
 	}
 
-	private void init(Bundle savedInstanceState) {
-		initFragments(savedInstanceState);
-		initListView();
-		initSwipeRefreshLayout();
+	private void init() {
 		initProgressDialog();
 		refreshNews();
 	}
 
-	private void initFragments(Bundle savedInstanceState) {
-		/*
-		 * if (savedInstanceState == null) { FragmentTransaction transaction =
-		 * getSupportFragmentManager().beginTransaction();
-		 * FragmentTransitionFragment fragment = new
-		 * FragmentTransitionFragment();
-		 * transaction.replace(R.id.sample_content_fragment, fragment);
-		 * transaction.commit(); }
-		 */
+	private void setupNewslistFragment(NewsSite news) {
+		if (newslistFragment != null) {
+			newslistFragment.updateNews(news);
+		} else if (savedInstanceState == null) {
+			FragmentTransaction transaction = getSupportFragmentManager()
+					.beginTransaction();
+			newslistFragment = new NewslistFragment(news);
+
+			transaction.replace(R.id.main_fragment, newslistFragment);
+			transaction.commit();
+		}
+
 	}
 
 	private void initProgressDialog() {
@@ -67,49 +69,11 @@ public class MainActivity extends ActionBarActivity {
 
 	}
 
-	private void initSwipeRefreshLayout() {
-		swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.main_swipe_to_refresh);
-
-		swipeRefreshLayout
-				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-					@Override
-					public void onRefresh() {
-						refreshNews();
-					}
-				});
-
-	}
-
-	private void initListView() {
-
-		newsAdapter = new NewsAdapter(getApplicationContext());
-		listView = (ListView) findViewById(R.id.main_listView);
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				Article article = (Article) parent.getItemAtPosition(position);
-
-				Toast.makeText(
-						getApplicationContext(),
-						"" + article.description.text + "\n\n"
-								+ article.channelTitle + "\n" + article.author
-								+ "\n" + article.pubDate.dayOfWeek + "\n"
-								+ article.pubDate.year, Toast.LENGTH_LONG)
-						.show();
-
-			}
-		});
-
-	}
-
-	private void refreshNews() {
+	public void refreshNews() {
 		articles = new ArrayList<Article>();
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-
 				ServerConnection connection = new ServerConnection();
 				final XmlParser parser = new XmlParser();
 				setArticles(connection, articles, parser);
@@ -121,7 +85,8 @@ public class MainActivity extends ActionBarActivity {
 							handleArticles(articles);
 
 							dismissProgressDialog();
-							swipeRefreshLayout.setRefreshing(false);
+
+							// swipeRefreshLayout.setRefreshing(false);
 						}
 
 					});
@@ -129,9 +94,7 @@ public class MainActivity extends ActionBarActivity {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							swipeRefreshLayout.setRefreshing(false);
-							dismissProgressDialog();
-							showErrorToast();
+							handleError();
 
 						}
 
@@ -139,6 +102,15 @@ public class MainActivity extends ActionBarActivity {
 				}
 			}
 		}).start();
+	}
+
+	private void handleError() {
+		if (newslistFragment != null) {
+			newslistFragment.errorWhenUpdate();
+		}
+		dismissProgressDialog();
+		showErrorToast();
+
 	}
 
 	private void dismissProgressDialog() {
@@ -149,10 +121,11 @@ public class MainActivity extends ActionBarActivity {
 
 	private void handleArticles(ArrayList<Article> articles) {
 		NewsSite news = new NewsSite(articles);
-		newsAdapter.clear();
+		// newsAdapter.clear();
 		Sort.onDate(news.articles);
 		limitArticles(news.articles);
-		pushToAdapter(news);
+		// pushToAdapter(news);
+		setupNewslistFragment(news);
 	}
 
 	private void limitArticles(ArrayList<Article> articles) {
@@ -228,15 +201,6 @@ public class MainActivity extends ActionBarActivity {
 			}
 		}
 		return false;
-	}
-
-	private void pushToAdapter(NewsSite news) {
-
-		listView.setAdapter(newsAdapter);
-		for (Article article : news.articles) {
-			newsAdapter.add(article);
-		}
-		newsAdapter.notifyDataSetChanged();
 	}
 
 }

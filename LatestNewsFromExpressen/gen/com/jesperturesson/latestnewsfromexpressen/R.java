@@ -1670,8 +1670,10 @@ containing a value of this type.
         public static final int image=0x7f090023;
         public static final int listMode=0x7f09000a;
         public static final int list_item=0x7f090025;
-        public static final int main_listView=0x7f090040;
-        public static final int main_swipe_to_refresh=0x7f09003f;
+        public static final int main_fragment=0x7f090040;
+        public static final int main_layout=0x7f09003f;
+        public static final int main_listView=0x7f090046;
+        public static final int main_swipe_to_refresh=0x7f090045;
         public static final int middle=0x7f09001d;
         public static final int never=0x7f090017;
         public static final int news_row_imageView=0x7f090042;
@@ -1759,7 +1761,8 @@ containing a value of this type.
         public static final int activity_main=0x7f030017;
         public static final int news_list_row=0x7f030018;
         public static final int news_list_row_clicked=0x7f030019;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001a;
+        public static final int news_list_view=0x7f03001a;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
