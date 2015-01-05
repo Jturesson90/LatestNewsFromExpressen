@@ -2,11 +2,7 @@ package com.jesperturesson.latestnewsfromexpressen.models;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
 public class NewsSite {
-
-	private static final String TAG = "NEWS";
 
 	public ArrayList<Article> articles;
 	public String title;

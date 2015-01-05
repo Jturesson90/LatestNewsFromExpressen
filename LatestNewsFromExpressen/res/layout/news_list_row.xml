@@ -21,6 +21,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/half_padding"
+        android:contentDescription="@string/empty_string"
         android:src="@drawable/ic_launcher"
         android:visibility="gone" />
 
@@ -31,7 +32,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/half_padding"
         android:layout_toRightOf="@+id/news_row_imageView"
-        android:text="TextView"
+        android:text="@string/default_textView_string"
         android:textColor="@color/flat_red" />
 
 </RelativeLayout>

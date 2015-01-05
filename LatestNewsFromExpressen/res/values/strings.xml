@@ -5,24 +5,7 @@
     <string name="app_name_logo">Breaking news</string>
     <string name="hello_world">Hello world!</string>
     <string name="network_failed">Network failed!</string>
-
-    <string-array name="rss_urls">
-        <item>http://expressen.se/rss/nyheter</item>
-        <item>http://gt.se/rss/nyheter</item>
-        <item>http://kvp.se/rss/nyheter</item>
-        <item>http://expressen.se/rss/sport</item>
-        <item>http://expressen.se/rss/noje</item>
-        <item>http://expressen.se/rss/debatt</item>
-        <item>http://expressen.se/rss/ledare</item>
-        <item>http://expressen.se/rss/kultur</item>
-        <item>http://expressen.se/rss/ekonomi</item>
-        <item>http://expressen.se/rss/halsa</item>
-        <item>http://expressen.se/rss/levabo</item>
-        <item>http://expressen.se/rss/motor</item>
-        <item>http://expressen.se/rss/res</item>
-        <item>http://expressen.se/rss/dokument</item>
-    </string-array>
-
-    
+    <string name="default_textView_string">TextView String</string>
+    <string name="empty_string"></string>
 
 </resources>

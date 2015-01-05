@@ -1,16 +1,11 @@
 package com.jesperturesson.latestnewsfromexpressen.models;
 
 import java.util.Date;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import android.gesture.GestureOverlayView;
-import android.util.Log;
+import com.jesperturesson.latestnewsfromexpressen.helpers.JsoupHelper;
 
 public class Article {
-	public final static int NUMBER_OF_ITEMS_TO_SHOW = 10;
 
+	public final static String TAG = "Article";
 	public String title;
 	public String link;
 	public ArticleTime pubDate;
@@ -64,9 +59,7 @@ public class Article {
 
 		private Date stringToDate(String pubDate) {
 			Date pubDate1 = new Date(pubDate);
-
 			return pubDate1;
-
 		}
 
 		private String setTime(String pubDate) {
@@ -110,31 +103,16 @@ public class Article {
 		public String text;
 
 		public Description(String desc) {
-
 			this.text = parseBody(desc);
 			this.imageLink = parsePicture(desc);
-
 		}
 
 		private String parsePicture(String desc) {
-			String src = null;
-			if (desc.contains("img")) {
-				Document document = Jsoup.parse(desc);
-				Element img = document.select("img").first();
-				if (desc.contains("src")) {
-					src = img.attr("src");
-				}
-			}
-			return src;
+			return JsoupHelper.getImageUrl(desc);
 		}
 
 		private String parseBody(String desc) {
-			String text = null;
-			if (desc.contains("p")) {
-				Document document = Jsoup.parse(desc);
-				text = document.body().text();
-			}
-			return text;
+			return JsoupHelper.getBody(desc);
 
 		}
 	}

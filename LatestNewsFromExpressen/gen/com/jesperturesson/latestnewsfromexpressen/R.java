@@ -17,7 +17,7 @@ public final class R {
         public static final int abc_slide_out_top=0x7f040005;
     }
     public static final class array {
-        public static final int rss_urls=0x7f0c0000;
+        public static final int news_feeds=0x7f0c0000;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -1669,8 +1669,9 @@ containing a value of this type.
         public static final int ifRoom=0x7f090016;
         public static final int image=0x7f090023;
         public static final int listMode=0x7f09000a;
-        public static final int listView=0x7f090040;
         public static final int list_item=0x7f090025;
+        public static final int main_listView=0x7f090040;
+        public static final int main_swipe_to_refresh=0x7f09003f;
         public static final int middle=0x7f09001d;
         public static final int never=0x7f090017;
         public static final int news_row_imageView=0x7f090042;
@@ -1697,7 +1698,6 @@ containing a value of this type.
         public static final int showTitle=0x7f090012;
         public static final int split_action_bar=0x7f090004;
         public static final int submit_area=0x7f09003c;
-        public static final int swipe_to_refresh=0x7f09003f;
         public static final int tabMode=0x7f09000c;
         public static final int textView1=0x7f090044;
         public static final int title=0x7f090027;
@@ -1818,10 +1818,14 @@ containing a value of this type.
         /**  Content description for the Toolbar icon used to collapse an expanded action mode. [CHAR LIMIT=NONE] 
          */
         public static final int abc_toolbar_collapse_description=0x7f0a0004;
-        public static final int app_name=0x7f0a0010;
-        public static final int app_name_logo=0x7f0a0011;
-        public static final int hello_world=0x7f0a0012;
-        public static final int network_failed=0x7f0a0013;
+        public static final int app_name=0x7f0a0012;
+        public static final int app_name_logo=0x7f0a0013;
+        public static final int default_textView_string=0x7f0a0016;
+        public static final int empty_string=0x7f0a0017;
+        public static final int hello_world=0x7f0a0014;
+        public static final int network_failed=0x7f0a0015;
+        public static final int progress_dialog_header_news=0x7f0a0010;
+        public static final int progress_dialog_text_news=0x7f0a0011;
     }
     public static final class style {
         /** 
