@@ -13,6 +13,7 @@ import com.jesperturesson.latestnewsfromexpressen.sync.ServerConnection;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -36,15 +37,27 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		init();
+		init(savedInstanceState);
 		mainActivity = this;
 	}
 
-	private void init() {
+	private void init(Bundle savedInstanceState) {
+		initFragments(savedInstanceState);
 		initListView();
 		initSwipeRefreshLayout();
 		initProgressDialog();
 		refreshNews();
+	}
+
+	private void initFragments(Bundle savedInstanceState) {
+		/*
+		 * if (savedInstanceState == null) { FragmentTransaction transaction =
+		 * getSupportFragmentManager().beginTransaction();
+		 * FragmentTransitionFragment fragment = new
+		 * FragmentTransitionFragment();
+		 * transaction.replace(R.id.sample_content_fragment, fragment);
+		 * transaction.commit(); }
+		 */
 	}
 
 	private void initProgressDialog() {

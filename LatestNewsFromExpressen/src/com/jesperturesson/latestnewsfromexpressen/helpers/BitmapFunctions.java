@@ -6,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.jesperturesson.latestnewsfromexpressen.activities.MainActivity;
-import com.jesperturesson.latestnewsfromexpressen.interfaces.CustomInterfaces;
+import com.jesperturesson.latestnewsfromexpressen.interfaces.CustomListener;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,7 +16,7 @@ public class BitmapFunctions {
 	private final static String TAG = "BitmapFunctions";
 
 	public static void getBitmapFromURL(final String src,
-			final CustomInterfaces.ImageSetListener imageSetListener) {
+			final CustomListener.ImageSetListener imageSetListener) {
 		new Thread(new Runnable() {
 
 			@Override

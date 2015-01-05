@@ -3,7 +3,7 @@ package com.jesperturesson.latestnewsfromexpressen.adapters;
 import com.jesperturesson.latestnewsfromexpressen.R;
 
 import com.jesperturesson.latestnewsfromexpressen.helpers.BitmapFunctions;
-import com.jesperturesson.latestnewsfromexpressen.interfaces.CustomInterfaces;
+import com.jesperturesson.latestnewsfromexpressen.interfaces.CustomListener;
 import com.jesperturesson.latestnewsfromexpressen.models.Article;
 
 import android.content.Context;
@@ -55,7 +55,7 @@ public class NewsAdapter extends ArrayAdapter<Article> {
 
 	private void setImage(String imageLink, final ImageView imageView) {
 		BitmapFunctions.getBitmapFromURL(imageLink,
-				new CustomInterfaces.ImageSetListener() {
+				new CustomListener.ImageSetListener() {
 					@Override
 					public void onImageSet(Bitmap image) {
 						if (image != null) {
