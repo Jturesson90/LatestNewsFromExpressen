@@ -37,27 +37,16 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		init(savedInstanceState);
+		init();
 		mainActivity = this;
 	}
 
-	private void init(Bundle savedInstanceState) {
-		initFragments(savedInstanceState);
+	private void init() {
+
 		initListView();
 		initSwipeRefreshLayout();
 		initProgressDialog();
 		refreshNews();
-	}
-
-	private void initFragments(Bundle savedInstanceState) {
-		/*
-		 * if (savedInstanceState == null) { FragmentTransaction transaction =
-		 * getSupportFragmentManager().beginTransaction();
-		 * FragmentTransitionFragment fragment = new
-		 * FragmentTransitionFragment();
-		 * transaction.replace(R.id.sample_content_fragment, fragment);
-		 * transaction.commit(); }
-		 */
 	}
 
 	private void initProgressDialog() {
