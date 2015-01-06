@@ -73,6 +73,7 @@ public class MainActivity extends ActionBarActivity {
 
 		newsAdapter = new NewsAdapter(getApplicationContext());
 		listView = (ListView) findViewById(R.id.main_listView);
+		listView.setAdapter(newsAdapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -221,7 +222,6 @@ public class MainActivity extends ActionBarActivity {
 
 	private void pushToAdapter(NewsSite news) {
 
-		listView.setAdapter(newsAdapter);
 		for (Article article : news.articles) {
 			newsAdapter.add(article);
 		}
