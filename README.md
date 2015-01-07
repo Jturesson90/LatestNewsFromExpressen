@@ -1,4 +1,4 @@
-# LatestNewsFromExpressen
+# Latest news from Expressen
 
 10 hour challange
 
@@ -18,4 +18,4 @@ within the listview. This could be done with transform animations for more visua
 
 One thought is when user clicks the fragment with more description it will switch the page for an fullscreen view of the article.
 
-Put the listView in its own fragment class.
+Put the listView in its own fragment class for better Object oriented programming.
