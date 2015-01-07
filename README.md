@@ -17,3 +17,5 @@ Future implementations would be to replace the popup text with another fragment 
 within the listview. This could be done with transform animations for more visually appealing.
 
 One thought is when user clicks the fragment with more description it will switch the page for an fullscreen view of the article.
+
+Put the listView in its own fragment class.
