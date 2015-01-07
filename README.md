@@ -1,4 +1,4 @@
-# LatestNewsFromExpressen
+# Latest news from Expressen
 
 10 hour challange
 
