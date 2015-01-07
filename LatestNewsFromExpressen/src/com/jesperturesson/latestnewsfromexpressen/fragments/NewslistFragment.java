@@ -116,8 +116,7 @@ public class NewslistFragment extends Fragment {
 		});
 
 	}
-
-	@SuppressWarnings("unused")
+	
 	private void showArticleToast(Article article) {
 		// TODO Auto-generated method stub
 		Toast.makeText(
