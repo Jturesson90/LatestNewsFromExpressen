@@ -1676,6 +1676,7 @@ containing a value of this type.
         public static final int main_swipe_to_refresh=0x7f090045;
         public static final int middle=0x7f09001d;
         public static final int never=0x7f090017;
+        public static final int news_row_description=0x7f090044;
         public static final int news_row_imageView=0x7f090042;
         public static final int news_row_time=0x7f090043;
         public static final int news_row_title=0x7f090041;
@@ -1701,7 +1702,6 @@ containing a value of this type.
         public static final int split_action_bar=0x7f090004;
         public static final int submit_area=0x7f09003c;
         public static final int tabMode=0x7f09000c;
-        public static final int textView1=0x7f090044;
         public static final int title=0x7f090027;
         public static final int up=0x7f090001;
         public static final int useLogo=0x7f090013;

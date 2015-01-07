@@ -35,4 +35,15 @@
         android:text="@string/default_textView_string"
         android:textColor="@color/flat_red" />
 
+    <TextView
+        android:id="@+id/news_row_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/news_row_time"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/news_row_time"
+        android:text="@string/default_textView_string"
+        android:visibility="gone" />
+
 </RelativeLayout>

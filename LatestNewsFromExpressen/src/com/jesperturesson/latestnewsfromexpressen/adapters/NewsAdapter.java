@@ -16,31 +16,48 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class NewsAdapter extends ArrayAdapter<Article> {
+	private final LayoutInflater mLayoutInflater;
+	public ViewGroup viewGroup;
+	private final int mResourceId;
+	View convertView;
 
-	View view;;
-
-	public NewsAdapter(Context context) {
+	public NewsAdapter(Context context, LayoutInflater inflater, int newsListRow) {
 		super(context, 0);
+		mLayoutInflater = inflater;
+		mResourceId = newsListRow;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		view = convertView;
+		final Article article;
+		viewGroup = parent;
+		this.convertView = convertView;
+		final View view;
 		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(
-					R.layout.news_list_row, parent, false);
+			view = mLayoutInflater.inflate(mResourceId, parent, false);
+			// convertView = LayoutInflater.from(getContext()).inflate(
+			// R.layout.news_list_row, parent, false);
+			article = getItem(position);
+			initObjects(article, view);
+
+		} else {
+			view = convertView;
+			article = (Article) view.getTag();
+
 		}
+
+		return view;
+	}
+
+	private void initObjects(Article article, View view) {
 		// Title TextView
-		TextView title = (TextView) convertView
-				.findViewById(R.id.news_row_title);
+		TextView title = (TextView) view.findViewById(R.id.news_row_title);
 		// Time TextView
-		TextView time = (TextView) convertView.findViewById(R.id.news_row_time);
+		TextView time = (TextView) view.findViewById(R.id.news_row_time);
 
 		// Image
-		ImageView imageView = (ImageView) convertView
+		ImageView imageView = (ImageView) view
 				.findViewById(R.id.news_row_imageView);
-
-		Article article = getItem(position);
 
 		if (article.description.imageLink != null) {
 			setImage(article.description.imageLink, imageView);
@@ -48,11 +65,11 @@ public class NewsAdapter extends ArrayAdapter<Article> {
 		} else {
 			imageView.setVisibility(View.GONE);
 		}
-		time.setText(article.pubDate.time + " " + article.pubDate.dayOfMonth
-				+ " " + article.pubDate.month);
+		time.setText(article.pubDate.time + " " + article.pubDate.month + " "
+				+ article.pubDate.dayOfMonth);
 		title.setText(article.title);
+		view.setTag(article);
 
-		return convertView;
 	}
 
 	private void setImage(String imageLink, final ImageView imageView) {

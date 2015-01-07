@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -83,10 +83,7 @@ public class MainActivity extends ActionBarActivity {
 						@Override
 						public void run() {
 							handleArticles(articles);
-
 							dismissProgressDialog();
-
-							// swipeRefreshLayout.setRefreshing(false);
 						}
 
 					});
@@ -121,10 +118,8 @@ public class MainActivity extends ActionBarActivity {
 
 	private void handleArticles(ArrayList<Article> articles) {
 		NewsSite news = new NewsSite(articles);
-		// newsAdapter.clear();
 		Sort.onDate(news.articles);
 		limitArticles(news.articles);
-		// pushToAdapter(news);
 		setupNewslistFragment(news);
 	}
 
@@ -145,7 +140,6 @@ public class MainActivity extends ActionBarActivity {
 		if (articles != null) {
 			if (articles.size() > 0) {
 				connectionIsFine = true;
-				Log.d("SIZE", "Size: " + articles.size());
 			}
 		}
 		return connectionIsFine;
