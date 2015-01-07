@@ -1,6 +1,7 @@
 # LatestNewsFromExpressen
 
 Jesper Turesson
+
 10 hour challange
 
 This Android application retrieves news feeds and shows the 10 recent articles.
