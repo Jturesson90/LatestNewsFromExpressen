@@ -45,6 +45,8 @@ public class NewsAdapter extends ArrayAdapter<Article> {
 		if (article.description.imageLink != null) {
 			setImage(article.description.imageLink, imageView);
 
+		} else {
+			imageView.setVisibility(View.GONE);
 		}
 		time.setText(article.pubDate.time + " " + article.pubDate.dayOfMonth
 				+ " " + article.pubDate.month);
