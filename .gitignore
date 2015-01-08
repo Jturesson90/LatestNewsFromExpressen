@@ -8,3 +8,6 @@ LatestNewsFromExpressen/bin/resources.ap_
 *.jar
 *.jar
 LatestNewsFromExpressen/bin/dexedLibs/android-support-v7-appcompat-9fb0104961155aa0b0b8a2e43da9ed63.jar
+*.ap_
+LatestNewsFromExpressen/bin/LatestNewsFromExpressen.apk
+*.jar
